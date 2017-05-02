@@ -2,7 +2,6 @@ package com.example.android.managers;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ViewSelectedUsers extends AppCompatActivity {
 
@@ -27,6 +27,8 @@ public class ViewSelectedUsers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_selected_users);
+
+
 
         Bundle bundle = getIntent().getExtras();
         final String userinfo=bundle.getString("user");
@@ -58,7 +60,6 @@ public class ViewSelectedUsers extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     User user = postSnapshot.getValue(User.class);
-                    Log.v("emer",""+postSnapshot.getValue(User.class));
                     users.add(user);
 
                 }
@@ -74,7 +75,8 @@ public class ViewSelectedUsers extends AppCompatActivity {
 
         mMessageListView.setAdapter(mMessageAdapter);
 
-
     }
+
+
 
 }
