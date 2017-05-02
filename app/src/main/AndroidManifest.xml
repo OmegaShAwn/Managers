@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDoDgq0dV0_bblgqC9jnBA5dhb9g6Bb9DU"/>
+            android:value="AIzaSyDoDgq0dV0_bblgqC9jnBA5dhb9g6Bb9DU" />
 
         <activity android:name=".Managers_main_activity">
             <intent-filter>
@@ -26,7 +26,9 @@
         <activity android:name=".ViewUsers" />
         <activity android:name=".ViewSelectedUsers" />
         <activity android:name=".EmergencyActivity" />
-        <activity android:name=".Locate"></activity>
+        <activity android:name=".Locate" />
+        <activity android:name=".staffActivity" />
+        <activity android:name=".LocateS"></activity>
     </application>
 
 </manifest>

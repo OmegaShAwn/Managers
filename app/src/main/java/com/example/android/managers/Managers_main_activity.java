@@ -69,6 +69,14 @@ public class Managers_main_activity extends AppCompatActivity {
                 startActivity(intentEmer);
             }
         });
+        Button staff =(Button)findViewById(R.id.staff);
+        staff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentstaff = new Intent(Managers_main_activity.this,staffActivity.class);
+                startActivity(intentstaff);
+            }
+        });
     }
 
     int k=0;

@@ -57,7 +57,6 @@ public class EmergencyActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     Emergencies user = postSnapshot.getValue(Emergencies.class);
-                    Log.v("emer", "" + postSnapshot.getValue(Emergencies.class));
                     flagdup = 0;
                     for (int i = 0; i < emergencies.size(); i++)
                         if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
@@ -70,9 +69,6 @@ public class EmergencyActivity extends AppCompatActivity {
                         if(flagdup==0)
                             if(h==3) {
                                 emergencies.add(user);
-                                Log.v("emer", "" + emergencies.get(0).emergencyDetails.getUsername());
-                                Log.v("emer", "" + emergencies.get(0).emergencyDetails.getSi());
-                                Log.v("emer", "" + emergencies.get(0).emergencyDetails.getTi());
                             }
 
                 }
@@ -93,9 +89,6 @@ public class EmergencyActivity extends AppCompatActivity {
                     if(flagdup==0)
                         if(h==2) {
                             emergencies.add(user);
-                            Log.v("emer", "" + emergencies.get(0).emergencyDetails.getUsername());
-                            Log.v("emer", "" + emergencies.get(0).emergencyDetails.getSi());
-                            Log.v("emer", "" + emergencies.get(0).emergencyDetails.getTi());
                         }
 
                 }
@@ -116,9 +109,6 @@ public class EmergencyActivity extends AppCompatActivity {
                     if(flagdup==0)
                         if(h==1) {
                             emergencies.add(user);
-                            Log.v("emer", "" + emergencies.get(0).emergencyDetails.getUsername());
-                            Log.v("emer", "" + emergencies.get(0).emergencyDetails.getSi());
-                            Log.v("emer", "" + emergencies.get(0).emergencyDetails.getTi());
                         }
 
                 }

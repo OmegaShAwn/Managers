@@ -34,6 +34,17 @@
             android:text="VIEW USERS"
             android:textColor="#fdfdfd"
             android:textSize="20sp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:id="@+id/staff"
+            android:textSize="20sp"
+            android:text="LOCATE STAFF"
+            android:textColor="#fdfdfd"
+            android:layout_margin="4dp"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +53,7 @@
             android:background="@color/colorred"
             android:layout_margin="4dp"
             android:textSize="20sp"
-            android:textColor="#ffffff"/>
+            android:textColor="#fdfdfd"/>
 
     </LinearLayout>
 </RelativeLayout>
