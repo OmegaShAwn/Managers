@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,6 +69,35 @@ ArrayList<String> staffArray = new ArrayList<String>();
 
             }
         });
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            int i;
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                i++;
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                i--;
+                if(i==0) {
+                    Intent s = new Intent(staffActivity.this, Managers_main_activity.class);
+                    Toast.makeText(getApplicationContext(), "User logged out", Toast.LENGTH_LONG).show();
+                    startActivity(s);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,7 +72,7 @@ public class EmergencyActivity extends AppCompatActivity {
                             if(h==3) {
                                 emergencies.add(user);
                             }
-
+                    mEmergenciesAdapter.notifyDataSetChanged();
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -90,7 +92,7 @@ public class EmergencyActivity extends AppCompatActivity {
                         if(h==2) {
                             emergencies.add(user);
                         }
-
+                    mEmergenciesAdapter.notifyDataSetChanged();
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -110,10 +112,13 @@ public class EmergencyActivity extends AppCompatActivity {
                         if(h==1) {
                             emergencies.add(user);
                         }
+                    mEmergenciesAdapter.notifyDataSetChanged();
 
                 }
                 setAdapter();
             }
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -122,7 +127,33 @@ public class EmergencyActivity extends AppCompatActivity {
         });
 
 
+        myRef.addChildEventListener(new ChildEventListener() {
+            int i;
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                i++;
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                i--;
+                if(i==0) {
+                    Intent s = new Intent(EmergencyActivity.this, Managers_main_activity.class);
+                    Toast.makeText(getApplicationContext(), "User logged out", Toast.LENGTH_LONG).show();
+                    startActivity(s);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
     }
 
