@@ -1,13 +1,14 @@
 package com.example.android.managers;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +30,7 @@ public class ViewSelectedUsers extends AppCompatActivity {
     DatabaseReference myRef ;
 
 
-
+    int flagdup=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,27 @@ public class ViewSelectedUsers extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                users.clear();
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     User user = postSnapshot.getValue(User.class);
-                    users.add(user);
+
+                    flagdup = 0;
+
+
+                            for (int i = 0; i < users.size(); i++)
+                            if (users.get(i).getUsername().equals(user.getUsername())) {
+                                flagdup = 1;
+                                break;
+                            }
+
+
+
+                            if (flagdup == 0) {
+                                users.add(user);
+                            }
+
+
                     mMessageAdapter.notifyDataSetChanged();
                 }
             }
@@ -83,15 +102,35 @@ public class ViewSelectedUsers extends AppCompatActivity {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selected = ((TextView) view.findViewById(R.id.name)).getText().toString();
+                final String selected = ((TextView) view.findViewById(R.id.name)).getText().toString();
 
-                Toast toast = Toast.makeText(getApplicationContext(), myRef.child(selected).getKey(), Toast.LENGTH_SHORT);
-                toast.show();
+//                Toast toast = Toast.makeText(getApplicationContext(), myRef.child(selected).getKey(), Toast.LENGTH_SHORT);
+//                toast.show();
 
-//                myRef.child(selected).removeValue();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewSelectedUsers.this);
+                builder.setMessage("Are you sure you want to remove "+myRef.child(selected).getKey()+"?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                myRef.child(selected).removeValue();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+                builder.show();
+                // Create the AlertDialog object and return it
+
+
+
 
             }
         });
+
+
+
 
     }
 
