@@ -2,7 +2,12 @@ package com.example.android.managers;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +28,9 @@ public class ViewSelectedUsers extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef ;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +41,6 @@ public class ViewSelectedUsers extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String userinfo=bundle.getString("user");
 
-        mMessageListView = (ListView) findViewById(R.id.messageListView);
-
-
 
 
         if(userinfo.equals("ambulance")){
@@ -45,12 +50,12 @@ public class ViewSelectedUsers extends AppCompatActivity {
         }
         else if(userinfo.equals("doctor")){
             myRef = database.getReference("UserCategories/Doctors");
-
         }
         else{
             myRef = database.getReference("UserCategories/Otheruser");
         }
 
+        mMessageListView = (ListView) findViewById(R.id.messageListView);
 
         myRef.addValueEventListener(new ValueEventListener() {
 
@@ -61,9 +66,8 @@ public class ViewSelectedUsers extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     User user = postSnapshot.getValue(User.class);
                     users.add(user);
-
+                    mMessageAdapter.notifyDataSetChanged();
                 }
-
             }
 
             @Override
@@ -74,6 +78,20 @@ public class ViewSelectedUsers extends AppCompatActivity {
         mMessageAdapter = new MessageAdapter(this, R.layout.item_message, users,userinfo);
 
         mMessageListView.setAdapter(mMessageAdapter);
+
+        mMessageListView.setOnItemClickListener(new OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String selected = ((TextView) view.findViewById(R.id.name)).getText().toString();
+
+                Toast toast = Toast.makeText(getApplicationContext(), myRef.child(selected).getKey(), Toast.LENGTH_SHORT);
+                toast.show();
+
+//                myRef.child(selected).removeValue();
+
+            }
+        });
 
     }
 

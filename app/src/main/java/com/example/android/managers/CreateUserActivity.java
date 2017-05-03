@@ -1,5 +1,6 @@
 package com.example.android.managers;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
         name = (EditText) findViewById(R.id.name);
         phoneno = (EditText) findViewById(R.id.phoneno);
-        username = (EditText) findViewById(R.id.username);
+//        username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         specialization = (EditText)findViewById(R.id.special);
 
@@ -89,7 +90,7 @@ public class CreateUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 newuser.setPassword(password.getText().toString());
                 newuser.setPhno(Long.parseLong(phoneno.getText().toString()));
-                newuser.setUsername(username.getText().toString());
+                newuser.setUsername(name.getText().toString());
                 newuser.setname(name.getText().toString());
                 flag=true;
 
@@ -116,7 +117,9 @@ public class CreateUserActivity extends AppCompatActivity {
 
                 if(flag==true){
                     myRef.child(newuser.getUsername()).setValue(newuser);
-                    Toast.makeText(CreateUserActivity.this,"Account Created",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Account Created",Toast.LENGTH_SHORT).show();
+                    Intent s= new Intent(CreateUserActivity.this, Managers_main_activity.class);
+                    startActivity(s);
 
                 }
             }
