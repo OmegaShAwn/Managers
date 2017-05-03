@@ -76,6 +76,7 @@ ArrayList<String> staffArray = new ArrayList<String>();
                 username = staffArray.get(position);
                 intent.putExtra("user", username);
                 startActivity(intent);
+                finish();
 
 //                mEmergenciesAdapter.remove(mEmergenciesAdapter);
 

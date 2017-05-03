@@ -140,7 +140,7 @@ public class EmergencyActivity extends AppCompatActivity {
                 TextView username =(TextView)view.findViewById(R.id.EmergenciesUsername);
                 intent.putExtra("user",username.getText().toString());
                 startActivity(intent);
-
+                finish();
 //                mEmergenciesAdapter.remove(mEmergenciesAdapter);
 
             }

@@ -1,6 +1,7 @@
 package com.example.android.managers;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -94,6 +96,37 @@ public class ViewSelectedUsers extends AppCompatActivity {
 
             }
         });
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            int i;
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                i++;
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                i--;
+                if(i==0)
+                {
+                    Intent s=new Intent(ViewSelectedUsers.this,ViewUsers.class);
+                    startActivity(s);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+
         mMessageAdapter = new MessageAdapter(this, R.layout.item_message, users,userinfo);
 
         mMessageListView.setAdapter(mMessageAdapter);

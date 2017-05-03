@@ -97,7 +97,8 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-               Intent s=new Intent(Locate.this,staffActivity.class);
+               Intent s=new Intent(Locate.this,EmergencyActivity.class);
+                Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_LONG).show();
                 startActivity(s);
                 finish();
             }
