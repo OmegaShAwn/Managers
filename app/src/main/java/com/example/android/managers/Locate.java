@@ -18,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,6 +67,7 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
         myRef.child(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     loc = postSnapshot.getValue(LocationDetails.class);
                 }
@@ -86,7 +88,26 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
             }
         });
 
+        myRef.child(username).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {}
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+               Intent s=new Intent(Locate.this,staffActivity.class);
+                startActivity(s);
+                finish();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     public void setMap(){
@@ -139,6 +160,7 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
 
 
     }
+
     private String getDirectionsUrl(LatLng origin,LatLng dest){
 
         // Origin of route
