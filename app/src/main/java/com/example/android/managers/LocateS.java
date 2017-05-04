@@ -99,7 +99,6 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
                 Intent s=new Intent(LocateS.this,staffActivity.class);
                 startActivity(s);
                 Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_LONG).show();
-                finish();
             }
 
             @Override

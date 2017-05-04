@@ -24,7 +24,7 @@ public class ViewUsers extends AppCompatActivity {
             public void onClick(View v) {
                 intentNewUser.putExtra("user","doctor");
                 startActivity(intentNewUser);
-                finish();
+//                finish();
             }
         });
 
@@ -33,7 +33,7 @@ public class ViewUsers extends AppCompatActivity {
             public void onClick(View v) {
                 intentNewUser.putExtra("user","ambulance");
                 startActivity(intentNewUser);
-                finish();
+//                finish();
             }
         });
         otherusers.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +41,7 @@ public class ViewUsers extends AppCompatActivity {
             public void onClick(View v) {
                 intentNewUser.putExtra("user","other");
                 startActivity(intentNewUser);
-                finish();
+//                finish();
             }
         });
     }
