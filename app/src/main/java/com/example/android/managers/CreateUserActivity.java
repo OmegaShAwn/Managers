@@ -32,10 +32,11 @@ public class CreateUserActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef ;
 
-
+    String delname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_details);
@@ -59,6 +60,7 @@ public class CreateUserActivity extends AppCompatActivity {
             final String userphno=Long.toString(bundle.getLong("userphno"));
             final String userspec=bundle.getString("userspec");
 
+            delname=username;
 
             name.setText(username);
             phoneno.setText(userphno);
@@ -107,14 +109,16 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newuser.setPassword(password.getText().toString());
-                newuser.setPhno(Long.parseLong(phoneno.getText().toString()));
+                String phno=phoneno.getText().toString();
+                if(!phno.equals(""))
+                    newuser.setPhno(Long.parseLong(phoneno.getText().toString()));
                 newuser.setUsername(name.getText().toString());
                 newuser.setname(name.getText().toString());
                 flag=true;
                 if(!userinfo.equals("ambulance"))
                     newuser.setSpeciality(specialization.getText().toString());
 
-                if(!newuser.name.equals("") && !newuser.password.equals("") && !newuser.phno.equals(""))
+                if(!newuser.name.equals("") && !newuser.password.equals("") && !phno.equals(""))
                 {
 
                     if(!userinfo.equals("ambulance") && newuser.speciality.equals(""))
@@ -143,8 +147,11 @@ public class CreateUserActivity extends AppCompatActivity {
                     myRef.child(newuser.getUsername()).setValue(newuser);
                     if(!edit)
                         Toast.makeText(getApplicationContext(),"Account Created",Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(),"Changes Accepted",Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(getApplicationContext(), "Changes Accepted", Toast.LENGTH_SHORT).show();
+                        if(!delname.equals(newuser.getUsername()))
+                            myRef.child(delname).removeValue();
+                    }
                     Intent s= new Intent(CreateUserActivity.this, Managers_main_activity.class);
                     startActivity(s);
 
@@ -152,7 +159,7 @@ public class CreateUserActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Field(s) cannot be left blank"+ newuser.name,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Field(s) cannot be left blank",Toast.LENGTH_SHORT).show();
                 }
             }
         });
