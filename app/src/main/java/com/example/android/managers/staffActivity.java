@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -84,10 +83,8 @@ ArrayList<String> staffArray = new ArrayList<String>();
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 i--;
                 if(i==0) {
-                    Intent s = new Intent(staffActivity.this, Managers_main_activity.class);
-                    Toast.makeText(getApplicationContext(), "User logged out", Toast.LENGTH_LONG).show();
-                    startActivity(s);
-                    finish();
+                  staffArray.clear();
+                    adapter.notifyDataSetChanged();
                 }
             }
 

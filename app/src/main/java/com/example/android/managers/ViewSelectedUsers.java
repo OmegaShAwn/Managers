@@ -1,7 +1,6 @@
 package com.example.android.managers;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -112,9 +111,9 @@ public class ViewSelectedUsers extends AppCompatActivity {
                 i--;
                 if(i==0)
                 {
-                    Intent s=new Intent(ViewSelectedUsers.this,ViewUsers.class);
-                    startActivity(s);
-                    finish();
+
+                    users.clear();
+                    mMessageAdapter.notifyDataSetChanged();
                 }
             }
 
