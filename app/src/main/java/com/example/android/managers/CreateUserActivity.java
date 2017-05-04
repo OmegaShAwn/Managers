@@ -1,9 +1,8 @@
 package com.example.android.managers;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +50,18 @@ public class CreateUserActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         final String userinfo=bundle.getString("user");
+        final Boolean edit=bundle.getBoolean("edit");
+        final String username=bundle.getString("username");
+        final String userpass=bundle.getString("userpass");
+        final String userphno=Long.toString(bundle.getLong("userphno"));
+        final String userspec=bundle.getString("userspec");
+
+        if(edit){
+            name.setText(username);
+            phoneno.setText(userphno);
+            password.setText(userpass);
+            specialization.setText(userspec);
+        }
 
         if(userinfo.equals("ambulance")){
             specialization.setVisibility(View.GONE);
@@ -85,6 +96,10 @@ public class CreateUserActivity extends AppCompatActivity {
         });
 
         Button create = (Button)findViewById(R.id.create);
+        if(edit)
+            create.setText("Accept Changes");
+
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,18 +108,24 @@ public class CreateUserActivity extends AppCompatActivity {
                 newuser.setUsername(name.getText().toString());
                 newuser.setname(name.getText().toString());
                 flag=true;
-
                 if(userinfo.equals("doctor")||userinfo.equals("otheruser"))
                     newuser.setSpeciality(specialization.getText().toString());
-                Log.v("Button",""+users.size());
-                //Log.v("Button",""+users.get(0).getUsername());
-                //Log.v("Button",""+users.get(1).getUsername());
+
+                if(!(newuser.name.equals("") || newuser.password.equals("") || newuser.phno.equals("")))
+                {
+
+                    if((userinfo.equals("doctor")||userinfo.equals("otheruser"))&&newuser.speciality.equals(""))
+                        Toast.makeText(getApplicationContext(),"Field(s) cannot be left blank",Toast.LENGTH_SHORT).show();
+                    else{
 
 
                 for(int i=0;i<users.size();i++){
                     if ((users.get(i).getUsername()).equals(newuser.getUsername())){
                         flag=false;
+                        if(!edit || name.equals(newuser.getUsername()))
                         Toast.makeText(CreateUserActivity.this,"Username already exists",Toast.LENGTH_LONG).show();
+                        else
+                            flag=true;
                         break;
                     }
                 }
@@ -117,10 +138,18 @@ public class CreateUserActivity extends AppCompatActivity {
 
                 if(flag==true){
                     myRef.child(newuser.getUsername()).setValue(newuser);
-                    Toast.makeText(getApplicationContext(),"Account Created",Toast.LENGTH_SHORT).show();
+                    if(!edit)
+                        Toast.makeText(getApplicationContext(),"Account Created",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(),"Changes Accepted",Toast.LENGTH_SHORT).show();
                     Intent s= new Intent(CreateUserActivity.this, Managers_main_activity.class);
                     startActivity(s);
 
+                }
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Field(s) cannot be left blank"+ newuser.name,Toast.LENGTH_SHORT).show();
                 }
             }
         });

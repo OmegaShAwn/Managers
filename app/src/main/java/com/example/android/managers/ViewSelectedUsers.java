@@ -1,6 +1,7 @@
 package com.example.android.managers;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -135,12 +136,15 @@ public class ViewSelectedUsers extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 final String selected = ((TextView) view.findViewById(R.id.name)).getText().toString();
+                final String selectedpass = ((TextView) view.findViewById(R.id.password)).getText().toString();
+                final String selectedspec = ((TextView) view.findViewById(R.id.special)).getText().toString();
+                final Long selectedphno = Long.valueOf(((TextView) view.findViewById(R.id.phno)).getText().toString());
 
 //                Toast toast = Toast.makeText(getApplicationContext(), myRef.child(selected).getKey(), Toast.LENGTH_SHORT);
 //                toast.show();
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ViewSelectedUsers.this);
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(ViewSelectedUsers.this);
                 builder.setMessage("Are you sure you want to remove "+myRef.child(selected).getKey()+"?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -151,7 +155,44 @@ public class ViewSelectedUsers extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // User cancelled the dialog
                             }
+                        });*/
+
+                CharSequence options[] = new CharSequence[] {"EDIT", "DELETE", "CANCEL"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewSelectedUsers.this);
+                builder.setTitle(myRef.child(selected).getKey())
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // the user clicked on colors[which]
+                                if(which==0){
+                                    Intent i=new Intent(ViewSelectedUsers.this,CreateUserActivity.class);
+                                    i.putExtra("edit",true);
+                                    i.putExtra("user",userinfo);
+                                    i.putExtra("username",myRef.child(selected).getKey());
+                                    i.putExtra("userpass",selectedpass);
+                                    i.putExtra("userphno",selectedphno);
+                                    i.putExtra("userspec",selectedspec);
+                                    startActivity(i);
+                                }
+                                if(which==1){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ViewSelectedUsers.this);
+                                    builder.setMessage("Are you sure you want to remove "+myRef.child(selected).getKey()+"?")
+                                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    myRef.child(selected).removeValue();
+                                                }
+                                            })
+                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    // User cancelled the dialog
+                                                }
+                                            });
+                                    builder.show();
+                                }
+                            }
                         });
+
                 builder.show();
                 // Create the AlertDialog object and return it
 

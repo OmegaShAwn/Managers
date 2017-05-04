@@ -28,7 +28,7 @@
         <activity android:name=".EmergencyActivity" />
         <activity android:name=".Locate" />
         <activity android:name=".staffActivity" />
-        <activity android:name=".LocateS"></activity>
+        <activity android:name=".LocateS" />
     </application>
 
 </manifest>

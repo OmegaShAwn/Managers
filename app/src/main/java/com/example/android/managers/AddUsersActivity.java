@@ -14,6 +14,7 @@ public class AddUsersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_users);
 
         final Intent intentNewUser = new Intent(AddUsersActivity.this,CreateUserActivity.class);
+        intentNewUser.putExtra("edit",false);
 
         Button doctors= (Button)findViewById(R.id.Doctors);
         Button ambulanceDrivers = (Button)findViewById(R.id.AmbulanceDrivers);
