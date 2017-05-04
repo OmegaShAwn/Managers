@@ -51,12 +51,15 @@ public class CreateUserActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String userinfo=bundle.getString("user");
         final Boolean edit=bundle.getBoolean("edit");
-        final String username=bundle.getString("username");
-        final String userpass=bundle.getString("userpass");
-        final String userphno=Long.toString(bundle.getLong("userphno"));
-        final String userspec=bundle.getString("userspec");
+
 
         if(edit){
+            final String username=bundle.getString("username");
+            final String userpass=bundle.getString("userpass");
+            final String userphno=Long.toString(bundle.getLong("userphno"));
+            final String userspec=bundle.getString("userspec");
+
+
             name.setText(username);
             phoneno.setText(userphno);
             password.setText(userpass);
@@ -108,13 +111,13 @@ public class CreateUserActivity extends AppCompatActivity {
                 newuser.setUsername(name.getText().toString());
                 newuser.setname(name.getText().toString());
                 flag=true;
-                if(userinfo.equals("doctor")||userinfo.equals("otheruser"))
+                if(!userinfo.equals("ambulance"))
                     newuser.setSpeciality(specialization.getText().toString());
 
-                if(!(newuser.name.equals("") || newuser.password.equals("") || newuser.phno.equals("")))
+                if(!newuser.name.equals("") && !newuser.password.equals("") && !newuser.phno.equals(""))
                 {
 
-                    if((userinfo.equals("doctor")||userinfo.equals("otheruser"))&&newuser.speciality.equals(""))
+                    if(!userinfo.equals("ambulance") && newuser.speciality.equals(""))
                         Toast.makeText(getApplicationContext(),"Field(s) cannot be left blank",Toast.LENGTH_SHORT).show();
                     else{
 
