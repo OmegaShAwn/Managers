@@ -1,7 +1,10 @@
 package com.example.android.managers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,6 +35,9 @@ public class Managers_main_activity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        if(!isNetworkAvailable())
+            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
 
         username=settings.getString("lusername","nil");
 
@@ -111,5 +117,11 @@ public class Managers_main_activity extends AppCompatActivity {
                 k=0;
             }
         }, 2000);// code here to show dialog // optional depending on your needs
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
