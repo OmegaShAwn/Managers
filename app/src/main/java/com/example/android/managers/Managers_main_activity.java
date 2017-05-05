@@ -11,6 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,27 +32,48 @@ public class Managers_main_activity extends AppCompatActivity {
         boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
         String u=settings.getString("lusername","");
         final String username;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("UserCategories/Managers");
 
-        if(hasLoggedIn)
+        if(!hasLoggedIn)
         {
-        }
-        else{
             Intent intent=new Intent(Managers_main_activity.this,MainActivity.class);
             startActivity(intent);
             finish();
         }
 
         if(!isNetworkAvailable())
-            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
 
-        username=settings.getString("lusername","nil");
+        username=settings.getString("lusername","");
 
         if(!u.equals("")) {
-            Toast.makeText(Managers_main_activity.this, username, Toast.LENGTH_LONG).show();
+            Toast.makeText(Managers_main_activity.this, username, Toast.LENGTH_SHORT).show();
         };
 
 
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(username)){
+                    Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                    Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    finish();
+                    SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0); // 0 - for private mode
+                    SharedPreferences.Editor editor = settings.edit();
 
+                    editor.putBoolean("hasLoggedIn",false);
+                    editor.putString("lusername","");
+                    editor.commit();
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         Button addUsers = (Button)findViewById(R.id.addusers);
@@ -91,11 +118,11 @@ public class Managers_main_activity extends AppCompatActivity {
     public void onBackPressed()
     {
         if(k==0) {
-            Toast.makeText(getApplicationContext(), "Press Back again to log out", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Press Back again to log out", Toast.LENGTH_SHORT).show();
             k++;
         }
         else {
-            Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0); // 0 - for private mode
             SharedPreferences.Editor editor = settings.edit();
