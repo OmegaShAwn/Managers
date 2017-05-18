@@ -80,8 +80,12 @@ public class Managers_main_activity extends AppCompatActivity {
         addUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentAddUsers = new Intent(Managers_main_activity.this,AddUsersActivity.class);
-                startActivity(intentAddUsers);
+                if(!isNetworkAvailable())
+                    Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intentAddUsers = new Intent(Managers_main_activity.this, AddUsersActivity.class);
+                    startActivity(intentAddUsers);
+                }
             }
         });
 
@@ -89,25 +93,36 @@ public class Managers_main_activity extends AppCompatActivity {
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentViewUsers = new Intent(Managers_main_activity.this,ViewUsers.class);
-                startActivity(intentViewUsers);
-
+                if(!isNetworkAvailable())
+                    Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intentViewUsers = new Intent(Managers_main_activity.this, ViewUsers.class);
+                    startActivity(intentViewUsers);
+                }
            }
         });
         Button emrgencies =(Button)findViewById(R.id.emergencies);
         emrgencies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentEmer = new Intent(Managers_main_activity.this,EmergencyActivity.class);
-                startActivity(intentEmer);
+                if(!isNetworkAvailable())
+                    Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intentEmer = new Intent(Managers_main_activity.this, EmergencyActivity.class);
+                    startActivity(intentEmer);
+                }
             }
         });
         Button staff =(Button)findViewById(R.id.staff);
         staff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentstaff = new Intent(Managers_main_activity.this,staffActivity.class);
-                startActivity(intentstaff);
+                if(!isNetworkAvailable())
+                    Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intentstaff = new Intent(Managers_main_activity.this, staffActivity.class);
+                    startActivity(intentstaff);
+                }
             }
         });
     }
