@@ -15,22 +15,42 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDoDgq0dV0_bblgqC9jnBA5dhb9g6Bb9DU" />
 
-        <activity android:name=".Managers_main_activity">
+        <activity android:name=".Managers_main_activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddUsersActivity" />
-        <activity android:name=".CreateUserActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ViewUsers" />
-        <activity android:name=".ViewSelectedUsers" />
-        <activity android:name=".EmergencyActivity" />
-        <activity android:name=".Locate" />
-        <activity android:name=".staffActivity" />
-        <activity android:name=".LocateS" />
+        <activity android:name=".AddUsersActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CreateUserActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ViewUsers"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ViewSelectedUsers"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EmergencyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Locate"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".staffActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LocateS"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
