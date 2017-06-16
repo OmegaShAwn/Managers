@@ -71,7 +71,6 @@ public class EmergencyActivity extends AppCompatActivity {
                             if(h==3) {
                                 emergencies.add(user);
                             }
-                    mEmergenciesAdapter.notifyDataSetChanged();
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -91,7 +90,6 @@ public class EmergencyActivity extends AppCompatActivity {
                         if(h==2) {
                             emergencies.add(user);
                         }
-                    mEmergenciesAdapter.notifyDataSetChanged();
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -111,7 +109,6 @@ public class EmergencyActivity extends AppCompatActivity {
                         if(h==1) {
                             emergencies.add(user);
                         }
-                    mEmergenciesAdapter.notifyDataSetChanged();
 
                 }
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -131,7 +128,6 @@ public class EmergencyActivity extends AppCompatActivity {
                         if(h==0) {
                             emergencies.add(user);
                         }
-                    mEmergenciesAdapter.notifyDataSetChanged();
 
                 }
                 setAdapter();
@@ -188,10 +184,17 @@ public class EmergencyActivity extends AppCompatActivity {
                 TextView username =(TextView)view.findViewById(R.id.EmergenciesUsername);
                 intent.putExtra("user",username.getText().toString());
                 startActivity(intent);
-                finish();
+//                finish();
 //                mEmergenciesAdapter.remove(mEmergenciesAdapter);
 
             }
         });
+    }
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(this,Managers_main_activity.class));
+        finish();
+        super.onBackPressed();
     }
 }

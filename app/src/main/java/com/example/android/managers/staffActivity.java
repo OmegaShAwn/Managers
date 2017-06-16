@@ -48,6 +48,9 @@ ArrayList<String> staffArray = new ArrayList<String>();
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                staffArray.clear();
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                    username = (String) postSnapshot.getKey();

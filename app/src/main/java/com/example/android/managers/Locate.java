@@ -71,11 +71,6 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     loc = postSnapshot.getValue(LocationDetails.class);
                 }
-                if (loc.getLatitude()==1.0&&loc.getLongitude()==1.0){
-                    Intent i=new Intent(Locate.this,EmergencyActivity.class);
-                    startActivity(i);
-                    myRef.child(username).removeValue();
-                }
                 if(loc.getLatitude()!=null)
                 setMap();
                 else
