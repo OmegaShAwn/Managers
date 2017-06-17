@@ -287,6 +287,7 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
             MarkerOptions markerOptions = new MarkerOptions();
 
             // Traversing through all the routes
+            if(result!=null)
             for(int i=0;i<result.size();i++){
                 points = new ArrayList<LatLng>();
                 lineOptions = new PolylineOptions();
@@ -312,9 +313,17 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
             }
 
             // Drawing polyline in the Google Map for the i-th route
-            googleMap.addPolyline(lineOptions);
-            distanceTextView.setText("Estimated Time Taken:"+distance);
+            if(lineOptions!=null) {
+                googleMap.addPolyline(lineOptions);
+                distanceTextView.setText("Estimated Time Taken :" + distance.substring(1, distance.length() - 1));
+            }
         }
     }
-
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(this,EmergencyActivity.class));
+        finish();
+        super.onBackPressed();
+    }
 }

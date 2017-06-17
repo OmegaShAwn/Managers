@@ -60,17 +60,17 @@ public class EmergencyActivity extends AppCompatActivity {
                     Emergencies user = postSnapshot.getValue(Emergencies.class);
                     flagdup = 0;
                     for (int i = 0; i < emergencies.size(); i++)
-                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
-                        {
+                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername())) {
                             flagdup = 1;
                             break;
                         }
 
-                        int h=Integer.valueOf(user.emergencyDetails.getSi());
-                        if(flagdup==0)
-                            if(h==3) {
-                                emergencies.add(user);
-                            }
+                    if(flagdup==0 && user.emergencyDetails!=null) {
+                        int h = Integer.valueOf(user.emergencyDetails.getSi());
+                        if (h == 3) {
+                            emergencies.add(user);
+                        }
+                    }
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -85,11 +85,12 @@ public class EmergencyActivity extends AppCompatActivity {
                             break;
                         }
 
-                    int h=Integer.valueOf(user.emergencyDetails.getSi());
-                    if(flagdup==0)
-                        if(h==2) {
+                    if(flagdup==0 && user.emergencyDetails!=null) {
+                        int h = Integer.valueOf(user.emergencyDetails.getSi());
+                        if (h == 2) {
                             emergencies.add(user);
                         }
+                    }
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -104,12 +105,13 @@ public class EmergencyActivity extends AppCompatActivity {
                             break;
                         }
 
-                    int h=Integer.valueOf(user.emergencyDetails.getSi());
-                    if(flagdup==0)
-                        if(h==1) {
+                    if(flagdup==0 && user.emergencyDetails!=null) {
+
+                        int h = Integer.valueOf(user.emergencyDetails.getSi());
+                        if (h == 1) {
                             emergencies.add(user);
                         }
-
+                    }
                 }
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
@@ -123,11 +125,13 @@ public class EmergencyActivity extends AppCompatActivity {
                             break;
                         }
 
-                    int h=Integer.valueOf(user.emergencyDetails.getSi());
-                    if(flagdup==0)
-                        if(h==0) {
+                    if(flagdup==0 && user.emergencyDetails!=null) {
+
+                        int h = Integer.valueOf(user.emergencyDetails.getSi());
+                        if (h == 0) {
                             emergencies.add(user);
                         }
+                    }
 
                 }
                 setAdapter();
@@ -184,7 +188,7 @@ public class EmergencyActivity extends AppCompatActivity {
                 TextView username =(TextView)view.findViewById(R.id.EmergenciesUsername);
                 intent.putExtra("user",username.getText().toString());
                 startActivity(intent);
-//                finish();
+                finish();
 //                mEmergenciesAdapter.remove(mEmergenciesAdapter);
 
             }

@@ -99,6 +99,7 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
                 Intent s=new Intent(LocateS.this,staffActivity.class);
                 startActivity(s);
                 Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_LONG).show();
+                finish();
             }
 
             @Override
@@ -291,6 +292,7 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
             MarkerOptions markerOptions = new MarkerOptions();
 
             // Traversing through all the routes
+            if(result!=null)
             for(int i=0;i<result.size();i++){
                 points = new ArrayList<LatLng>();
                 lineOptions = new PolylineOptions();
@@ -321,4 +323,11 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(this,staffActivity.class));
+        finish();
+        super.onBackPressed();
+    }
 }
