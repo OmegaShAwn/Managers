@@ -117,5 +117,6 @@ ArrayList<String> staffArray = new ArrayList<String>();
     public void onBackPressed() {
         Intent f=new Intent(staffActivity.this,Managers_main_activity.class);
         startActivity(f);
+        finish();
     }
 }
