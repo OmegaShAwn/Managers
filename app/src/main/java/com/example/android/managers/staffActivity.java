@@ -3,9 +3,6 @@ package com.example.android.managers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,7 +29,7 @@ public class staffActivity extends AppCompatActivity {
 ArrayList<String> staffArray = new ArrayList<String>();
 
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.log, menu); //your file name
@@ -51,7 +48,7 @@ ArrayList<String> staffArray = new ArrayList<String>();
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
