@@ -119,15 +119,11 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
             LatLng coordinate = new LatLng(loc.getLatitude(),loc.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(coordinate));
 
-            float f;
-            if(firstTime != 0)
-                f=googleMap.getCameraPosition().zoom;
-            else {
-                f = 17.0f;
+            if(firstTime == 0) {
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinate, 17.0f);
+                googleMap.moveCamera(cameraUpdate);
                 firstTime++;
             }
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinate, f);
-            googleMap.moveCamera(cameraUpdate);
 
             String url = getDirectionsUrl(coordinate, destination);
 
