@@ -147,6 +147,8 @@ public class Managers_main_activity extends AppCompatActivity {
                         editor.commit();
                         startActivity(i);
 
+                        finish();
+
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
