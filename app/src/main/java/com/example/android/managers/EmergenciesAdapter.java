@@ -52,7 +52,11 @@ public class EmergenciesAdapter  extends ArrayAdapter<Emergencies>{
             v.setBackgroundColor(Color.parseColor("#ffff4444"));
         }
 
-        String string1="fire";
+        String string1="Not Specified";
+        if(emergencies.emergencyDetails.getTi().equals("1"))
+        {
+            string1="fire";
+        }
         if(emergencies.emergencyDetails.getTi().equals("2"))
         {
             string1="pregnancy";
