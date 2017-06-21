@@ -48,7 +48,7 @@ public class EmergencyActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.log_option:
-                Intent i=new Intent(getApplicationContext(),logList.class);
+                Intent i=new Intent(getApplicationContext(),logNames.class);
                 i.putExtra("type","Ambulance");
                 startActivity(i);
                 return true;

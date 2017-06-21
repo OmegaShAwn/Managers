@@ -17,34 +17,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 
-public class logList extends AppCompatActivity {
+public class logNames extends AppCompatActivity {
 
-    int i;
-    String username;
+
     ArrayList<String> emerlist = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_list);
+        setContentView(R.layout.activity_log_names);
 
-        Bundle extras= getIntent().getExtras();
-        username = extras.getString("username");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("Log/Ambulance/"+username);
+        DatabaseReference ref = database.getReference("UserCategories/AmbulanceDrivers");
 
-        final ArrayAdapter adapter = new ArrayAdapter<String>(logList.this, R.layout.listview, R.id.label, emerlist);
-        final ListView listView = (ListView) findViewById(R.id.logs);
+        final ArrayAdapter adapter = new ArrayAdapter<String>(logNames.this, R.layout.listview, R.id.label, emerlist);
+        final ListView listView = (ListView) findViewById(R.id.logsn);
         listView.setAdapter(adapter);
 
         ref.addChildEventListener(new ChildEventListener() {
-            int no;
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                no++;
-                timeEnded tE = dataSnapshot.getValue(timeEnded.class);
-                emerlist.add(Integer.toString(tE.dates)+" | "+ Integer.toString(tE.months)+" | "+ Integer.toString(tE.years)+" || "+ Integer.toString(tE.hours)+" : "+ Integer.toString(tE.minutes));
+                emerlist.add(dataSnapshot.getKey());
                 adapter.notifyDataSetChanged();
             }
 
@@ -64,15 +58,10 @@ public class logList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), details.class);
-                intent.putExtra("username",username);
-                intent.putExtra("no", position+1);
+                Intent intent = new Intent(getApplicationContext(), logList.class);
+                intent.putExtra("username",(String)listView.getItemAtPosition(position));
                 startActivity(intent);
-
-//                mEmergenciesAdapter.remove(mEmergenciesAdapter);
-
             }
         });
-
     }
 }

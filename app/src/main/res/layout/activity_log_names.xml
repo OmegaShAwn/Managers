@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.managers.logList">
+    tools:context="com.example.android.managers.logNames">
 
 
     <ListView
-        android:id="@+id/logs"
+        android:id="@+id/logsn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:layout_constraintTop_creator="1"
