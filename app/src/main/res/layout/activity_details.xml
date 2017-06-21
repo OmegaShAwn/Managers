@@ -90,8 +90,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Location"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorwhite"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:background="@color/colorred"
+                android:textColor="@color/colorwhite" />
         </LinearLayout>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
