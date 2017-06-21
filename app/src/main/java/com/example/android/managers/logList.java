@@ -28,11 +28,14 @@ public class logList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_list);
 
-        Bundle extras= getIntent().getExtras();
+        final Bundle extras= getIntent().getExtras();
         username = extras.getString("username");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("Log/Ambulance/"+username);
+        if(extras.get("type").equals("Staff")){
+            ref = database.getReference("Log/Staff/"+username);
+        }
 
         final ArrayAdapter adapter = new ArrayAdapter<String>(logList.this, R.layout.listview, R.id.label, emerlist);
         final ListView listView = (ListView) findViewById(R.id.logs);
@@ -64,13 +67,18 @@ public class logList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), details.class);
-                intent.putExtra("username",username);
-                intent.putExtra("no", position+1);
-                startActivity(intent);
-
-//                mEmergenciesAdapter.remove(mEmergenciesAdapter);
-
+                if(extras.get("type").equals("Staff")){
+                    Intent intent = new Intent(getApplicationContext(), detailstaff.class);
+                    intent.putExtra("username",username);
+                    intent.putExtra("no", position+1);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), details.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("no", position + 1);
+                    startActivity(intent);
+                }
             }
         });
 

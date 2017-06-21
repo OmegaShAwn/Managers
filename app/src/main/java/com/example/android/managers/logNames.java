@@ -27,9 +27,12 @@ public class logNames extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_names);
 
+        final Bundle extras=getIntent().getExtras();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("UserCategories/AmbulanceDrivers");
+        if(extras.get("type").equals("Staff"))
+            ref = database.getReference("UserCategories/Otheruser");
 
         final ArrayAdapter adapter = new ArrayAdapter<String>(logNames.this, R.layout.listview, R.id.label, emerlist);
         final ListView listView = (ListView) findViewById(R.id.logsn);
@@ -60,6 +63,7 @@ public class logNames extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), logList.class);
                 intent.putExtra("username",(String)listView.getItemAtPosition(position));
+                intent.putExtra("type",(String)extras.get("type"));
                 startActivity(intent);
             }
         });

@@ -30,35 +30,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/Details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Details"
-                android:textColor="@color/colorred"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
-
-            <TextView
-                android:id="@+id/Si"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Severity:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <TextView
-                android:id="@+id/No"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Number:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <TextView
-                android:id="@+id/Ti"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Type:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <TextView
                 android:id="@+id/Time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
