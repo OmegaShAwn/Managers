@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -29,7 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="left"
-            android:text="Username:"
+            android:text="Reported By:"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView

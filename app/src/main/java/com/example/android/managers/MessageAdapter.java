@@ -34,7 +34,7 @@ public class MessageAdapter extends ArrayAdapter<User> {
         }
 
         TextView mName = (TextView)convertView.findViewById(R.id.name);
-        TextView mUsername = (TextView)convertView.findViewById(R.id.username);
+//        TextView mUsername = (TextView)convertView.findViewById(R.id.username);
         TextView mPassword = (TextView)convertView.findViewById(R.id.password);
         TextView mPhno = (TextView)convertView.findViewById(R.id.phno);
         LinearLayout mSpecialLayout = (LinearLayout)convertView.findViewById(R.id.specialLinearLayout);
@@ -44,13 +44,13 @@ public class MessageAdapter extends ArrayAdapter<User> {
         User user = getItem(position);
 
 
-        mName.setText(""+user.getname());
-        mUsername.setText(""+user.getUsername());
-        mPassword.setText(""+user.getPassword());
-        mPhno.setText(""+user.getPhno().toString());
+        mName.setText(user.getname());
+//        mUsername.setText(""+user.getUsername());
+        mPassword.setText(user.getPassword());
+        mPhno.setText(user.getPhno().toString());
 
         if(cuser.equals("doctor")||cuser.equals("other")){
-            mspecial.setText(""+user.getSpeciality());
+            mspecial.setText(user.getSpeciality());
 
         }
         else
