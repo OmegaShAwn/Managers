@@ -1,6 +1,5 @@
 package com.example.android.managers;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
@@ -64,37 +62,25 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
 
         mapView.getMapAsync(this);
 
-        myRef.child(username).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    loc = postSnapshot.getValue(LocationDetails.class);
-                }
-                if(loc!=null)
-                    setMap();
-                else
-                    Toast.makeText(Locate.this,"Location not received yet",Toast.LENGTH_LONG).show();
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         myRef.child(username).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {}
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                if(dataSnapshot!=null)
+                    loc = dataSnapshot.getValue(LocationDetails.class);
+                if(loc!=null)
+                    setMap();
+                else
+                    Toast.makeText(Locate.this,"Location not received yet",Toast.LENGTH_LONG).show();
+            }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-               Intent s=new Intent(Locate.this,EmergencyActivity.class);
-                Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_LONG).show();
-                startActivity(s);
+                Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_SHORT).show();
+                myRef.removeEventListener(this);
                 finish();
             }
 
@@ -110,7 +96,10 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
         if(googleMap!=null){
             MapsInitializer.initialize(Locate.this);
             googleMap.clear();
-            LatLng coordinate = new LatLng(loc.getLatitude(),loc.getLongitude());
+
+            LatLng coordinate=new LatLng(0.0,0.0);
+            if(loc!=null && coordinate!=null)
+                coordinate= new LatLng(loc.getLatitude(),loc.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(coordinate));
 
             if(firstTime == 0) {
@@ -322,11 +311,11 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
             }
         }
     }
-    @Override
+  /*  @Override
     public void onBackPressed()
     {
         startActivity(new Intent(this,EmergencyActivity.class));
         finish();
         super.onBackPressed();
-    }
+    }*/
 }
