@@ -44,7 +44,7 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
     String username;
     int firstTime=0;
     String distance;
-    LocationDetails loc;
+    public LocationDetails loc;
     TextView distanceTextView;
     LatLng destination = new LatLng(10.0876,76.3882);
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -71,8 +71,8 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     loc = postSnapshot.getValue(LocationDetails.class);
                 }
-                if(loc.getLatitude()!=null)
-                setMap();
+                if(loc!=null)
+                    setMap();
                 else
                     Toast.makeText(Locate.this,"Location not received yet",Toast.LENGTH_LONG).show();
 
