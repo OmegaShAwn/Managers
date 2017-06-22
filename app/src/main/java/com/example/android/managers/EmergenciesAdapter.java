@@ -29,8 +29,7 @@ public class EmergenciesAdapter  extends ArrayAdapter<Emergencies>{
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.item_emergency_message, parent, false);
         }
 
-        TextView mName = (TextView)convertView.findViewById(R.id.EmergenciesName);
-        TextView mUsername = (TextView)convertView.findViewById(R.id.EmergenciesUsername);
+        TextView mName = (TextView)convertView.findViewById(R.id.EmergenciesUsername);
         TextView mseverity = (TextView)convertView.findViewById(R.id.EmergenciesSeverity);
         TextView mtype = (TextView)convertView.findViewById(R.id.EmergenciesType);
         TextView no = (TextView)convertView.findViewById(R.id.no);
@@ -91,8 +90,6 @@ public class EmergenciesAdapter  extends ArrayAdapter<Emergencies>{
         else
             string2=emergencies.emergencyDetails.getno();
         mName.setText(""+emergencies.emergencyDetails.getUsername());
-        Log.v("emer","");
-        mUsername.setText(""+emergencies.emergencyDetails.getUsername());
         Log.v("emer","");
         mseverity.setText(""+string);
         Log.v("emer","");

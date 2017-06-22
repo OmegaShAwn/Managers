@@ -12,39 +12,12 @@
 
         <TextView
 
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="left"
-            android:text="Reported By:"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/EmergenciesName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:gravity="left"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal">
-
-        <TextView
-
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="left"
-            android:text="Username:"
+            android:text="Reported By:"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -70,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="left"
-            android:text="No. of Casuality"
+            android:text="Casuality No:"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
