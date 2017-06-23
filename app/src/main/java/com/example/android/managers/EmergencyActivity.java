@@ -3,7 +3,6 @@ package com.example.android.managers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,10 +16,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.android.managers.R.id.emergencyMessageListView;
 
@@ -28,24 +25,23 @@ import static com.example.android.managers.R.id.emergencyMessageListView;
 public class EmergencyActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    DatabaseReference mRef;
     private ListView mMessageListView;
     private EmergenciesAdapter mEmergenciesAdapter;
-    int flagdup=0;
 
 
-    List<Emergencies> emergencies = new ArrayList<>();
+    ArrayList<Emergencies> emergencies = new ArrayList<>();
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.log, menu); //your file name
+        inflater.inflate(R.menu.log, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.log_option:
                 Intent i=new Intent(getApplicationContext(),logNames.class);
@@ -63,117 +59,17 @@ public class EmergencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_emergency);
 
         mMessageListView = (ListView) findViewById(emergencyMessageListView);
-
-
+        setAdapter();
 
         myRef = database.getReference("Emergencies");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                emergencies.clear();
-
-
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    Emergencies user = postSnapshot.getValue(Emergencies.class);
-                    flagdup = 0;
-                    for (int i = 0; i < emergencies.size(); i++)
-                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername())) {
-                            flagdup = 1;
-                            break;
-                        }
-
-                    if(flagdup==0 && user.emergencyDetails!=null) {
-                        int h = Integer.valueOf(user.emergencyDetails.getSi());
-                        if (h == 3) {
-                            emergencies.add(user);
-                        }
-                    }
-                }
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    Emergencies user = postSnapshot.getValue(Emergencies.class);
-                    Log.v("emer", "" + postSnapshot.getValue(Emergencies.class));
-                    flagdup = 0;
-                    for (int i = 0; i < emergencies.size(); i++)
-                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
-                        {
-                            flagdup = 1;
-                            break;
-                        }
-
-                    if(flagdup==0 && user.emergencyDetails!=null) {
-                        int h = Integer.valueOf(user.emergencyDetails.getSi());
-                        if (h == 2) {
-                            emergencies.add(user);
-                        }
-                    }
-                }
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    Emergencies user = postSnapshot.getValue(Emergencies.class);
-                    Log.v("emer", "" + postSnapshot.getValue(Emergencies.class));
-                    flagdup = 0;
-                    for (int i = 0; i < emergencies.size(); i++)
-                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
-                        {
-                            flagdup = 1;
-                            break;
-                        }
-
-                    if(flagdup==0 && user.emergencyDetails!=null) {
-
-                        int h = Integer.valueOf(user.emergencyDetails.getSi());
-                        if (h == 1) {
-                            emergencies.add(user);
-                        }
-                    }
-                }
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    Emergencies user = postSnapshot.getValue(Emergencies.class);
-                    Log.v("emer", "" + postSnapshot.getValue(Emergencies.class));
-                    flagdup = 0;
-                    for (int i = 0; i < emergencies.size(); i++)
-                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
-                        {
-                            flagdup = 1;
-                            break;
-                        }
-
-                    if(flagdup==0 && user.emergencyDetails!=null) {
-
-                        int h = Integer.valueOf(user.emergencyDetails.getSi());
-                        if (h == 0) {
-                            emergencies.add(user);
-                        }
-                    }
-
-                }
-                setAdapter();
-            }
-
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        mRef = database.getReference("Emergencies");
 
         myRef.addChildEventListener(new ChildEventListener() {
-            int i;
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                i++;
+                Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                emergencies.add(user);
+                mEmergenciesAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -181,11 +77,11 @@ public class EmergencyActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                i--;
-                if(i==0) {
-                   emergencies.clear();
-                    mEmergenciesAdapter.notifyDataSetChanged();
-                }
+                Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                for(int i=0; i< emergencies.size(); i++)
+                    if(emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
+                        emergencies.remove(i);
+                mEmergenciesAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -194,7 +90,6 @@ public class EmergencyActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
     }
 
     public void setAdapter(){
@@ -211,8 +106,6 @@ public class EmergencyActivity extends AppCompatActivity {
                 TextView username =(TextView)view.findViewById(R.id.EmergenciesUsername);
                 intent.putExtra("user",username.getText().toString());
                 startActivity(intent);
-//                mEmergenciesAdapter.remove(mEmergenciesAdapter);
-
             }
         });
     }
