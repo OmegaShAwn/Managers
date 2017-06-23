@@ -114,9 +114,8 @@ public class Locate extends Activity implements OnMapReadyCallback {
             MapsInitializer.initialize(Locate.this);
             googleMap.clear();
 
-            LatLng coordinate = null;
             if(loc!=null) {
-                coordinate = new LatLng(loc.getLatitude(), loc.getLongitude());
+                LatLng coordinate = new LatLng(loc.getLatitude(), loc.getLongitude());
                 googleMap.addMarker(new MarkerOptions().position(coordinate));
 
                 if (firstTime == 0) {
@@ -141,8 +140,6 @@ public class Locate extends Activity implements OnMapReadyCallback {
         Log.v("main","googlemap set");
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.getUiSettings().setZoomControlsEnabled(true);
-
-
     }
     @Override
     public void onResume() {
@@ -208,9 +205,9 @@ public class Locate extends Activity implements OnMapReadyCallback {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
-            String line = "";
+            String line;
             while( ( line = br.readLine()) != null){
                 sb.append(line);
             }
@@ -222,8 +219,10 @@ public class Locate extends Activity implements OnMapReadyCallback {
         }catch(Exception e){
             Log.d("Exception", e.toString());
         }finally{
-            iStream.close();
-            urlConnection.disconnect();
+            if(iStream!=null)
+                iStream.close();
+            if(urlConnection!=null)
+                urlConnection.disconnect();
         }
         return data;
     }
@@ -292,14 +291,13 @@ public class Locate extends Activity implements OnMapReadyCallback {
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-            ArrayList<LatLng> points = null;
+            ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
-            MarkerOptions markerOptions = new MarkerOptions();
 
             // Traversing through all the routes
             if(result!=null)
             for(int i=0;i<result.size();i++){
-                points = new ArrayList<LatLng>();
+                points = new ArrayList<>();
                 lineOptions = new PolylineOptions();
 
                 // Fetching i-th route

@@ -139,11 +139,9 @@ public class CreateUserActivity extends AppCompatActivity {
 
                 if(users.size()==0){
                     flag=true;
-                    //Toast.makeText(CreateUserActivity.this,"Username already exists",Toast.LENGTH_LONG).show();
-
                 }
 
-                if(flag==true){
+                if(flag){
                     myRef.child(newuser.getUsername()).setValue(newuser);
                     if(!edit)
                         Toast.makeText(getApplicationContext(),"Account Created",Toast.LENGTH_SHORT).show();
