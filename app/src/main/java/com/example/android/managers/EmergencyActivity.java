@@ -65,9 +65,11 @@ public class EmergencyActivity extends AppCompatActivity {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Emergencies user = dataSnapshot.getValue(Emergencies.class);
-                emergencies.add(user);
-                mEmergenciesAdapter.notifyDataSetChanged();
+                if(dataSnapshot!=null) {
+                    Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                    emergencies.add(user);
+                    mEmergenciesAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -75,11 +77,13 @@ public class EmergencyActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Emergencies user = dataSnapshot.getValue(Emergencies.class);
-                for(int i=0; i< emergencies.size(); i++)
-                    if(emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
-                        emergencies.remove(i);
-                mEmergenciesAdapter.notifyDataSetChanged();
+                if(dataSnapshot!=null) {
+                    Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                    for (int i = 0; i < emergencies.size(); i++)
+                        if (emergencies.get(i).emergencyDetails.getUsername().equals(user.emergencyDetails.getUsername()))
+                            emergencies.remove(i);
+                    mEmergenciesAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
