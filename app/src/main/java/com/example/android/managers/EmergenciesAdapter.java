@@ -12,13 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by RoshanJoy on 20-03-2017.
- */
 
-public class EmergenciesAdapter  extends ArrayAdapter<Emergencies>{
+class EmergenciesAdapter  extends ArrayAdapter<Emergencies>{
 
-    public EmergenciesAdapter(Context context, int resource, List<Emergencies> objects) {
+    EmergenciesAdapter(Context context, int resource, List<Emergencies> objects) {
 
         super(context, resource, objects );
     }

@@ -25,7 +25,6 @@ import static com.example.android.managers.R.id.emergencyMessageListView;
 public class EmergencyActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
-    DatabaseReference mRef;
     private ListView mMessageListView;
     private EmergenciesAdapter mEmergenciesAdapter;
 
@@ -62,7 +61,6 @@ public class EmergencyActivity extends AppCompatActivity {
         setAdapter();
 
         myRef = database.getReference("Emergencies");
-        mRef = database.getReference("Emergencies");
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -112,7 +110,6 @@ public class EmergencyActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        startActivity(new Intent(this,Managers_main_activity.class));
         finish();
         super.onBackPressed();
     }

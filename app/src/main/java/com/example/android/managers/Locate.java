@@ -1,9 +1,9 @@
 package com.example.android.managers;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Locate extends AppCompatActivity implements OnMapReadyCallback {
+public class Locate extends Activity implements OnMapReadyCallback {
 
     MapView mapView;
     GoogleMap googleMap;
@@ -44,6 +44,7 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
     String distance;
     public LocationDetails loc;
     TextView distanceTextView;
+    ChildEventListener clistener = null;
     LatLng destination = new LatLng(10.0876,76.3882);
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Emergencies");
@@ -62,26 +63,42 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
 
         mapView.getMapAsync(this);
 
-
-        myRef.child(username).addChildEventListener(new ChildEventListener() {
+        clistener = myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                if(dataSnapshot!=null) {
+                    Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                    if (user.emergencyDetails.getUsername().equals(username)) {
+                        if (dataSnapshot.child("locationDetails") != null) {
+                            loc = dataSnapshot.child("locationDetails").getValue(LocationDetails.class);
+                            setMap();
+                        } else
+                            Toast.makeText(Locate.this, "Location not received yet", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                if(dataSnapshot!=null)
-                    loc = dataSnapshot.getValue(LocationDetails.class);
-                if(loc!=null)
-                    setMap();
-                else
-                    Toast.makeText(Locate.this,"Location not received yet",Toast.LENGTH_LONG).show();
+                Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                if (user.emergencyDetails.getUsername().equals(username)) {
+                    if(dataSnapshot.child("locationDetails")!=null) {
+                        loc = dataSnapshot.child("locationDetails").getValue(LocationDetails.class);
+                        setMap();
+                    }
+                    else
+                        Toast.makeText(Locate.this,"Current Location not received",Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_SHORT).show();
-                myRef.removeEventListener(this);
-                finish();
+                Emergencies user = dataSnapshot.getValue(Emergencies.class);
+                if (user.emergencyDetails.getUsername().equals(username)) {
+                    Toast.makeText(getApplicationContext(), "User logged out", Toast.LENGTH_SHORT).show();
+                    myRef.removeEventListener(clistener);
+                    finish();
+                }
             }
 
             @Override
@@ -97,23 +114,24 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
             MapsInitializer.initialize(Locate.this);
             googleMap.clear();
 
-            LatLng coordinate=new LatLng(0.0,0.0);
-            if(loc!=null && coordinate!=null)
-                coordinate= new LatLng(loc.getLatitude(),loc.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(coordinate));
+            LatLng coordinate = null;
+            if(loc!=null) {
+                coordinate = new LatLng(loc.getLatitude(), loc.getLongitude());
+                googleMap.addMarker(new MarkerOptions().position(coordinate));
 
-            if(firstTime == 0) {
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinate, 17.0f);
-                googleMap.moveCamera(cameraUpdate);
-                firstTime++;
+                if (firstTime == 0) {
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coordinate, 17.0f);
+                    googleMap.moveCamera(cameraUpdate);
+                    firstTime++;
+                }
+
+                String url = getDirectionsUrl(coordinate, destination);
+
+                DownloadTask downloadTask = new DownloadTask();
+
+                // Start downloading json data from Google Directions API
+                downloadTask.execute(url);
             }
-
-            String url = getDirectionsUrl(coordinate, destination);
-
-            DownloadTask downloadTask = new DownloadTask();
-
-            // Start downloading json data from Google Directions API
-            downloadTask.execute(url);
         }
     }
 
@@ -307,15 +325,15 @@ public class Locate extends AppCompatActivity implements OnMapReadyCallback {
             // Drawing polyline in the Google Map for the i-th route
             if(lineOptions!=null) {
                 googleMap.addPolyline(lineOptions);
-                distanceTextView.setText("Estimated Time Taken :" + distance.substring(1, distance.length() - 1));
+                String s = "Estimated Time Taken :" + distance.substring(1, distance.length() - 1);
+                distanceTextView.setText(s);
             }
         }
     }
-  /*  @Override
-    public void onBackPressed()
-    {
-        startActivity(new Intent(this,EmergencyActivity.class));
+    @Override
+    public void onBackPressed() {
+        myRef.removeEventListener(clistener);
         finish();
         super.onBackPressed();
-    }*/
+    }
 }

@@ -1,10 +1,10 @@
 package com.example.android.managers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,14 +37,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
+public class LocateS extends Activity implements OnMapReadyCallback {
 
     MapView mapView;
     GoogleMap googleMap;
-    String username;
+    String username,distance;
     int firstTime=0;
-    String distance;
     LocationDetails loc;
+    ChildEventListener clistener = null;
     TextView distanceTextView;
     LatLng destination = new LatLng(10.0876,76.3882);
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -87,18 +87,29 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
             }
         });
 
-        myRef.child(username).addChildEventListener(new ChildEventListener() {
+        clistener = myRef.child(username).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                loc = dataSnapshot.getValue(LocationDetails.class);
+                if(loc!=null)
+                    setMap();
+                else
+                    Toast.makeText(LocateS.this,"Location not received yet",Toast.LENGTH_LONG).show();
+            }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                loc = dataSnapshot.getValue(LocationDetails.class);
+                if(loc!=null)
+                    setMap();
+                else
+                    Toast.makeText(LocateS.this,"Location not received yet",Toast.LENGTH_LONG).show();
+            }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Intent s=new Intent(LocateS.this,staffActivity.class);
-                startActivity(s);
-                Toast.makeText(getApplicationContext(),"User logged out",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "User logged out", Toast.LENGTH_SHORT).show();
+                myRef.removeEventListener(clistener);
                 finish();
             }
 
@@ -108,8 +119,6 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-
     }
 
     public void setMap(){
@@ -329,7 +338,6 @@ public class LocateS extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onBackPressed()
     {
-        startActivity(new Intent(this,staffActivity.class));
         finish();
         super.onBackPressed();
     }

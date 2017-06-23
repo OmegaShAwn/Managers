@@ -129,16 +129,11 @@ ArrayList<String> staffArray = new ArrayList<String>();
                 username = staffArray.get(position);
                 intent.putExtra("user", username);
                 startActivity(intent);
-                finish();
-
-//                mEmergenciesAdapter.remove(mEmergenciesAdapter);
-
             }
         });
     }
     public void onBackPressed() {
-        Intent f=new Intent(staffActivity.this,Managers_main_activity.class);
-        startActivity(f);
         finish();
+        super.onBackPressed();
     }
 }
