@@ -31,7 +31,7 @@ public class LocateS extends Activity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_locate);
+        setContentView(R.layout.activity_locate_s);
 
         Bundle extras = getIntent().getExtras();
         username= extras.getString("user");
@@ -100,15 +100,18 @@ public class LocateS extends Activity implements OnMapReadyCallback {
     }
     @Override
     public void onPause() {
+        myRef.removeEventListener(listen);
         super.onPause();
     }
     @Override
     public void onStop(){
+        myRef.removeEventListener(listen);
         finish();
         super.onStop();
     }
     @Override
     public void onDestroy() {
+        finish();
         super.onDestroy();
     }
     @Override
