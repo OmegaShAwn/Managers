@@ -100,7 +100,6 @@ public class LocateS extends Activity implements OnMapReadyCallback {
     }
     @Override
     public void onPause() {
-        myRef.removeEventListener(listen);
         super.onPause();
     }
     @Override
