@@ -52,13 +52,13 @@ public class details extends AppCompatActivity {
                         start.setText("Start: "+tE.dates+" | "+ tE.months+" | "+ tE.years+" || "+ tE.hours+" : "+ tE.minutes);
                         t="Not Specified";
                         if(tE.ti==1)
-                            t="Fire";
+                            t="Neural";
                         if(tE.ti==2)
-                            t="Pregnency";
+                            t="Pregnancy";
                         if(tE.ti==3)
-                            t="Heart";
+                            t="Heart Attack";
                         if(tE.ti==4)
-                            t="Accident";
+                            t="Vehicle Accident";
                         if(tE.ti==5)
                             t="Head Injury";
                         if(tE.ti==6)
