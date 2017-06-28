@@ -93,6 +93,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:background="@color/colorred"
                 android:textColor="@color/colorwhite" />
+            <TextView
+                android:id="@+id/dest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </LinearLayout>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
