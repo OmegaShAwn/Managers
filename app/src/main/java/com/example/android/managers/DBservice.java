@@ -48,7 +48,7 @@ public class DBservice extends Service {
             Toast.makeText(this,"Rajagiri Log folder has been created.",Toast.LENGTH_SHORT).show();
         }
 
-        db=openOrCreateDatabase(Environment.getExternalStorageDirectory().getPath()+"/Rajagiri Log/Emergencies", Context.MODE_PRIVATE, null);
+        db=openOrCreateDatabase(Environment.getExternalStorageDirectory().getPath()+"/Rajagiri Log/Emergencies.db", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS EMERGENCIES(START_DATE DATE, END_DATE DATE, NAME VARCHAR, TYPE VARCHAR, SEVERITY VARCHAR, NUMBER_OF_PATIENTS INTEGER, START_LATITUDE FLOAT, START_LONGITUDE FLOAT, END_LATITUDE FLOAT, END_LONGITUDE FLOAT, FINAL_DESTINATION VARCHAR);");
 
         eref.addChildEventListener(new ChildEventListener() {
@@ -152,7 +152,7 @@ public class DBservice extends Service {
         });
 
 
-        dbs=openOrCreateDatabase(Environment.getExternalStorageDirectory().getPath()+"/Rajagiri Log/Staff", Context.MODE_PRIVATE, null);
+        dbs=openOrCreateDatabase(Environment.getExternalStorageDirectory().getPath()+"/Rajagiri Log/Staff.db", Context.MODE_PRIVATE, null);
         dbs.execSQL("CREATE TABLE IF NOT EXISTS STAFF(START_DATE DATE, END_DATE DATE, NAME VARCHAR, START_LATITUDE FLOAT, START_LONGITUDE FLOAT, END_LATITUDE FLOAT, END_LONGITUDE FLOAT);");
 
         sref.addChildEventListener(new ChildEventListener() {
