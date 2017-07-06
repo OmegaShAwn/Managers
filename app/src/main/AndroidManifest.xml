@@ -26,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".DBservice"
+            android:label="DBservice">
+
+        </service>
         <activity
             android:name=".AddUsersActivity"
             android:configChanges="orientation"
@@ -78,7 +84,12 @@
             android:name=".location"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".detailstaff"></activity>
+        <activity
+            android:name=".detailstaff"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

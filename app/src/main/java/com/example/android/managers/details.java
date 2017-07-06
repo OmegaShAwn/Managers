@@ -73,7 +73,7 @@ public class details extends AppCompatActivity {
                         si.setText("Severity: "+t);
                         no.setText("Number: "+tE.no);
                         if(tE.dest==1)
-                            dest.setText("The patient was taken elsewhere due to high criticality.");
+                            dest.setText("The patient was taken elsewhere due to unknown reasons.");
                         i.putExtra("lat",tE.lat);
                         i.putExtra("lon",tE.lon);
                         i.putExtra("late",tE.late);

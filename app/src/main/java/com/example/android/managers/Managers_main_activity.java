@@ -53,7 +53,11 @@ public class Managers_main_activity extends AppCompatActivity {
 
         if(!u.equals("")) {
             Toast.makeText(Managers_main_activity.this, username, Toast.LENGTH_SHORT).show();
-        };
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Intent s = new Intent(getApplicationContext(), DBservice.class);
+                startService(s);
+            }
+        }
 
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -158,6 +162,7 @@ public class Managers_main_activity extends AppCompatActivity {
                         editor.putString("lusername","");
 
                         editor.commit();
+                        stopService(new Intent(getApplicationContext(),DBservice.class));
                         startActivity(i);
 
                         finish();
