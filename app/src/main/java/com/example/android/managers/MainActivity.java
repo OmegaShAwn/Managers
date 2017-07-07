@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("lusername",currentUserName);
 
 // Commit the edits!
-                        editor.commit();
+                        editor.apply();
                         Toast.makeText(MainActivity.this,"Logged in successfully",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(MainActivity.this,Managers_main_activity.class);
                         intent.putExtra("username",currentUserName);

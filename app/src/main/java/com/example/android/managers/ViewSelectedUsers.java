@@ -24,7 +24,6 @@ import java.util.List;
 
 public class ViewSelectedUsers extends AppCompatActivity {
 
-    private ListView mMessageListView;
     private MessageAdapter mMessageAdapter;
     List<User> users = new ArrayList<>();
 
@@ -45,20 +44,20 @@ public class ViewSelectedUsers extends AppCompatActivity {
         final String userinfo=bundle.getString("user");
 
 
-
-        if(userinfo.equals("ambulance")){
-
-            myRef = database.getReference("UserCategories/AmbulanceDrivers");
-
+        assert userinfo != null;
+        switch (userinfo) {
+            case "ambulance":
+                myRef = database.getReference("UserCategories/AmbulanceDrivers");
+                break;
+            case "doctor":
+                myRef = database.getReference("UserCategories/Doctors");
+                break;
+            default:
+                myRef = database.getReference("UserCategories/Otheruser");
+                break;
         }
-        else if(userinfo.equals("doctor")){
-            myRef = database.getReference("UserCategories/Doctors");
-        }
-        else{
-            myRef = database.getReference("UserCategories/Otheruser");
-        }
 
-        mMessageListView = (ListView) findViewById(R.id.messageListView);
+        ListView mMessageListView = (ListView) findViewById(R.id.messageListView);
 
         myRef.addValueEventListener(new ValueEventListener() {
 

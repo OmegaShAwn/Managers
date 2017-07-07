@@ -29,7 +29,7 @@ public class staffActivity extends AppCompatActivity {
 
 
 
-ArrayList<String> staffArray = new ArrayList<String>();
+ArrayList<String> staffArray = new ArrayList<>();
 
 
     @Override
@@ -62,7 +62,7 @@ ArrayList<String> staffArray = new ArrayList<String>();
         usramb = database.getReference("UserCategories/Otheruser");
 
 
-        final ArrayAdapter adapter = new ArrayAdapter<String>(staffActivity.this, R.layout.listview, R.id.label, staffArray);
+        final ArrayAdapter adapter = new ArrayAdapter<>(staffActivity.this, R.layout.listview, R.id.label, staffArray);
 
         ListView listView = (ListView) findViewById(R.id.staff);
         listView.setAdapter(adapter);
@@ -76,7 +76,7 @@ ArrayList<String> staffArray = new ArrayList<String>();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                   username = (String) postSnapshot.getKey();
+                   username = postSnapshot.getKey();
                     int f = 0;
                     for (int i = 0; i < staffArray.size(); i++) {
                         if (staffArray.get(i).equals(username))

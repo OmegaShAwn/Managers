@@ -53,10 +53,10 @@ public class Managers_main_activity extends AppCompatActivity {
 
         if(!u.equals("")) {
             Toast.makeText(Managers_main_activity.this, username, Toast.LENGTH_SHORT).show();
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            /*if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 Intent s = new Intent(getApplicationContext(), DBservice.class);
                 startService(s);
-            }
+            }*/
         }
 
 
@@ -73,7 +73,7 @@ public class Managers_main_activity extends AppCompatActivity {
 
                     editor.putBoolean("hasLoggedIn",false);
                     editor.putString("lusername","");
-                    editor.commit();
+                    editor.apply();
                 }
 
             }
@@ -161,7 +161,7 @@ public class Managers_main_activity extends AppCompatActivity {
                         editor.putBoolean("hasLoggedIn", false);
                         editor.putString("lusername","");
 
-                        editor.commit();
+                        editor.apply();
                         stopService(new Intent(getApplicationContext(),DBservice.class));
                         startActivity(i);
 

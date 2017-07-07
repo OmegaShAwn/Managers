@@ -21,7 +21,7 @@ public class logList extends AppCompatActivity {
 
     int i;
     String username;
-    ArrayList<String> emerlist = new ArrayList<String>();
+    ArrayList<String> emerlist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +33,11 @@ public class logList extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("Log/Ambulance/"+username);
-        if(extras.get("type").equals("Staff")){
+        if("Staff".equals(extras.get("type"))){
             ref = database.getReference("Log/Staff/"+username);
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter<String>(logList.this, R.layout.listview, R.id.label, emerlist);
+        final ArrayAdapter adapter = new ArrayAdapter<>(logList.this, R.layout.listview, R.id.label, emerlist);
         final ListView listView = (ListView) findViewById(R.id.logs);
         listView.setAdapter(adapter);
 
@@ -67,7 +67,7 @@ public class logList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(extras.get("type").equals("Staff")){
+                if("Staff".equals(extras.get("type"))){
                     Intent intent = new Intent(getApplicationContext(), detailstaff.class);
                     intent.putExtra("username",username);
                     intent.putExtra("no", position+1);

@@ -68,18 +68,18 @@ public class CreateUserActivity extends AppCompatActivity {
             specialization.setText(userspec);
         }
 
-        if(userinfo.equals("ambulance")){
-            specialization.setVisibility(View.GONE);
-             myRef = database.getReference("UserCategories/AmbulanceDrivers");
-
-
-        }
-        else if(userinfo.equals("doctor")){
-             myRef = database.getReference("UserCategories/Doctors");
-
-        }
-        else{
-            myRef = database.getReference("UserCategories/Otheruser");
+        assert userinfo != null;
+        switch (userinfo) {
+            case "ambulance":
+                specialization.setVisibility(View.GONE);
+                myRef = database.getReference("UserCategories/AmbulanceDrivers");
+                break;
+            case "doctor":
+                myRef = database.getReference("UserCategories/Doctors");
+                break;
+            default:
+                myRef = database.getReference("UserCategories/Otheruser");
+                break;
         }
 
 
@@ -129,7 +129,7 @@ public class CreateUserActivity extends AppCompatActivity {
                 for(int i=0;i<users.size();i++){
                     if ((users.get(i).getUsername()).equals(newuser.getUsername())){
                         flag=false;
-                        if(!edit || name.equals(newuser.getUsername()))
+                        if(!edit || name.getText().toString().equals(newuser.getUsername()))
                         Toast.makeText(CreateUserActivity.this,"Username already exists",Toast.LENGTH_LONG).show();
                         else
                             flag=true;

@@ -22,7 +22,7 @@ class EmergenciesAdapter  extends ArrayAdapter<Emergencies>{
 
 
     @NonNull
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.item_emergency_message, parent, false);
         }

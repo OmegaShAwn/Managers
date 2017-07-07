@@ -1,11 +1,8 @@
 package com.example.android.managers;
 
-/**
- * Created by RoshanJoy on 16-03-2017.
- */
-
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,10 +13,6 @@ import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<User> {
     String cuser;
-    public MessageAdapter(Context context, int resource, List<User> objects) {
-
-        super(context, resource, objects );
-    }
 
     public MessageAdapter(Context context, int resource, List<User> objects,String cuser) {
 
@@ -27,8 +20,9 @@ public class MessageAdapter extends ArrayAdapter<User> {
         this.cuser=cuser;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.item_message, parent, false);
         }
@@ -44,6 +38,7 @@ public class MessageAdapter extends ArrayAdapter<User> {
         User user = getItem(position);
 
 
+        assert user != null;
         mName.setText(user.getname());
 //        mUsername.setText(""+user.getUsername());
         mPassword.setText(user.getPassword());

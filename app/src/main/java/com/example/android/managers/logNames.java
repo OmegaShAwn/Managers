@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class logNames extends AppCompatActivity {
 
 
-    ArrayList<String> emerlist = new ArrayList<String>();
+    ArrayList<String> emerlist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +31,10 @@ public class logNames extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("UserCategories/AmbulanceDrivers");
-        if(extras.get("type").equals("Staff"))
+        if("Staff".equals(extras.get("type")))
             ref = database.getReference("UserCategories/Otheruser");
 
-        final ArrayAdapter adapter = new ArrayAdapter<String>(logNames.this, R.layout.listview, R.id.label, emerlist);
+        final ArrayAdapter adapter = new ArrayAdapter<>(logNames.this, R.layout.listview, R.id.label, emerlist);
         final ListView listView = (ListView) findViewById(R.id.logsn);
         listView.setAdapter(adapter);
 
